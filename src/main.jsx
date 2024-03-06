@@ -7,7 +7,7 @@ import "../node_modules/bootstrap/dist/js/bootstrap.bundle.js";
 import "../node_modules/bootstrap/dist/css/bootstrap.css";
 
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import Home from "./pages/Home.jsx";
+import Home from "./pages/Home/Home.jsx";
 import AuthContextProvider from "./components/context/AuthContextProvider.jsx";
 import Layout from "./components/Layout.jsx";
 import LoginForm from "./components/Authentication/Login/LoginForm.jsx";

@@ -124,7 +124,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <div className="d-flex align-items-center justify-content-center container">
+      <div className="d-flex align-items-center justify-content-center containerLogin">
         <Card style={{ width: "400px", boxShadow: "8px 8px 8px gray" }}>
           <Card.Body>
             <Card.Title
