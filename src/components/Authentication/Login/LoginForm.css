@@ -1,0 +1,23 @@
+.divButton{
+    text-align: center;
+    margin-top: 3rem;
+}
+
+.loginButton{
+    width: 50%;
+}
+
+.container{
+    height: 100vh;
+    background-color: whitesmoke;
+}
+
+.registrationContainer{
+    margin-top: 3rem;
+    float: inline-end;
+    font-size: medium;
+}
+
+.input-error {
+    border: 1px solid red;
+}

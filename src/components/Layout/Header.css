@@ -1,0 +1,80 @@
+nav {
+  background-color: #333;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  color: #fff;
+  font-size: 22px;
+  font-style: italic;
+  padding-left: 2%;
+}
+
+.menu {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+}
+
+.menu li {
+  margin-right: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  min-width: 160px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Aggiungi stile quando il link del menu è in hover */
+.menu li:hover,
+.dropdown-content li:hover {
+  background-color: #555;
+}
+
+/* Stile per la freccia */
+.dropdown:after {
+  content: "\25BC"; /* Codice Unicode per la freccia verso il basso */
+  font-size: 12px;
+  margin-left: 5px;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+nav ul li {
+  margin-right: 1rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #fff;
+}
+
+#imageLockKey {
+  width: 1.2rem;
+  height: 1.2rem;
+  
+}
