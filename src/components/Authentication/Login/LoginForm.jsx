@@ -11,7 +11,7 @@ export default function LoginForm() {
   const { user, setUser } = useContext(AuthContext);
   const { isLogged, setIsLogged } = useContext(AuthContext);
 
-  const navigateTo = useNavigate()
+  const navigateTo = useNavigate();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -52,22 +52,25 @@ export default function LoginForm() {
       return;
     }
 
-    //i dati sono corretti allora inserisco l'utente e setto il token se lui ha scelto di essere ricordato
-    if (formData.remember) {
-      document.cookie =
-        "token=" +
-        logDb.token +
-        "; Secure; max-age=" +
-        getExpireSecond(logDb.ttl, logDb.tokenCreationType) +
-        ";";
-    } else {
-      // in questo caso l'autenticazione scade quando venie chiusa la sessione
-      document.cookie = "token=" + logDb.token + ";";
-    }
+    logDb.json().then((dataToken) => {
 
-    //setto un cookie con l'email dell'utente che si è loggato
-    Cookies.set("email", formData.email, {
-      expires: AuthService.getExpireSecond(logDb.ttl, logDb.tokenCreationType),
+      console.log(dataToken)
+      //i dati sono corretti allora inserisco l'utente e setto il token se lui ha scelto di essere ricordato
+      if (formData.remember) {
+        Cookies.set("token", dataToken.token, {
+          expires: new Date(dataToken.ttl),
+        });
+      } else {
+        // in questo caso l'autenticazione scade quando venie chiusa la sessione
+        Cookies.set("token", dataToken.token);
+      }
+
+      //setto un cookie con l'email dell'utente che si è loggato
+      Cookies.set("email", formData.email, {
+        expires: new Date(dataToken.ttl),
+      });
+
+      setIsLogged(true);
     });
 
     //mi prendo i dati dell'utente e li setto nello stato
@@ -81,13 +84,9 @@ export default function LoginForm() {
       email: userDb.email,
     });
 
-    setIsLogged(true);
-
     //vai verso la home
-    navigateTo("/")
+    navigateTo("/");
   };
-
-  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
