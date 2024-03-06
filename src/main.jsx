@@ -13,6 +13,7 @@ import Layout from "./components/Layout.jsx";
 import LoginForm from "./components/Authentication/Login/LoginForm.jsx";
 import RegistrationForm from "./components/Authentication/Registration/RegistrationForm.jsx";
 import AuthService from "./service/AuthService.jsx";
+import CourseList from "./pages/Courses/CourseList.jsx";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         path: "/registration",
         element: <RegistrationForm></RegistrationForm>,
       },
+      {
+        path:"/courses",
+        element: <CourseList></CourseList>
+      }
     ],
   },
 ]);

@@ -1,0 +1,13 @@
+.containerCourses{
+    height: 60rem;
+}
+
+.titleCourses{
+    text-align: center;
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+}
+
+.myTableCourses{
+   margin: 5rem;
+}

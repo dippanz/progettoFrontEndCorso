@@ -8,7 +8,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-dark text-light text-center fixed-bottom">
+    <footer className="bg-dark text-light text-center">
       <div className="py-5">
         <div className="d-flex justify-content-center mb-5">
           <Link>
@@ -43,7 +43,6 @@ export default function Footer() {
                       Section 2
                     </a>
                   </li>
-                  {/* Aggiungi altri link secondo le tue esigenze */}
                 </ul>
               </div>
               <div className="col-md-4">
@@ -59,7 +58,6 @@ export default function Footer() {
                       Service 2
                     </a>
                   </li>
-                  {/* Aggiungi altri servizi secondo le tue esigenze */}
                 </ul>
               </div>
               <div className="col-md-4">
