@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
@@ -12,6 +12,7 @@ import AuthContextProvider from "./components/context/AuthContextProvider.jsx";
 import Layout from "./components/Layout.jsx";
 import LoginForm from "./components/Authentication/Login/LoginForm.jsx";
 import RegistrationForm from "./components/Authentication/Registration/RegistrationForm.jsx";
+import AuthService from "./service/AuthService.jsx";
 
 const router = createBrowserRouter([
   {
@@ -26,16 +27,20 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path :"/login",
-        element: <LoginForm></LoginForm>
+        path: "/login",
+        element: <LoginForm></LoginForm>,
       },
       {
-        path :"/registration",
-        element: <RegistrationForm></RegistrationForm>
-      }
+        path: "/registration",
+        element: <RegistrationForm></RegistrationForm>,
+      },
     ],
   },
 ]);
+
+
+
+
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   /*<React.StrictMode>

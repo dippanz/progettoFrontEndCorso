@@ -2,14 +2,16 @@ import "./RegistrationForm.css";
 import React, { useContext, useState } from "react";
 import { Card } from "react-bootstrap";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../../service/AuthService";
 import { AuthContext } from "../../context/AuthContextProvider";
+import Cookies from "js-cookie";
 
 export default function RegistrationForm() {
-
   const { user, setUser } = useContext(AuthContext);
+  const { isLogged, setIsLogged } = useContext(AuthContext);
 
+  const navigateTo = useNavigate()
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -27,7 +29,6 @@ export default function RegistrationForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
 
     const isEmailValid =
       /^[a-zA-Z0-9\.\+_\-]+@[a-zA-Z0-9\.\+_\-]+\.[A-z]{2,5}$/.test(
@@ -62,14 +63,14 @@ export default function RegistrationForm() {
       nome: formData.firstName,
       cognome: formData.lastName,
       email: formData.email,
-      password: formData.password
+      password: formData.password,
     });
 
-    console.log(responseReg)
-    debugger;
-
-    if(responseReg.status == undefined || (responseReg.status != 200 && responseReg.status != 201) ){
-      alert("errore nella registrazione")
+    if (
+      responseReg.status == undefined ||
+      (responseReg.status != 200 && responseReg.status != 201)
+    ) {
+      alert("errore nella registrazione");
       return;
     }
 
@@ -80,8 +81,13 @@ export default function RegistrationForm() {
       password: formData.password,
     });
 
+    //setto la validazione dell'accesso solo alla sessione
     document.cookie = "token=" + logDb.token + ";";
 
+    //setto un cookie con l'email dell'utente che si è loggato
+    Cookies.set("email", formData.email, {
+      expires: AuthService.getExpireSecond(logDb.ttl, logDb.tokenCreationType),
+    });
 
     setUser({
       ...user,
@@ -90,6 +96,11 @@ export default function RegistrationForm() {
       lastName: userDb.cognome,
       email: userDb.email,
     });
+
+    setIsLogged(true);
+
+    //vai verso la home
+    navigateTo("/")
   };
 
   return (

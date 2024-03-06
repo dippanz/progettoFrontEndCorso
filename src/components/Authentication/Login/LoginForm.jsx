@@ -3,11 +3,15 @@ import { Card } from "react-bootstrap";
 import "./LoginForm.css";
 import AuthService from "../../../service/AuthService";
 import { AuthContext } from "../../context/AuthContextProvider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import RegistrationForm from "../Registration/RegistrationForm";
+import Cookies from "js-cookie";
 
 export default function LoginForm() {
   const { user, setUser } = useContext(AuthContext);
+  const { isLogged, setIsLogged } = useContext(AuthContext);
+
+  const navigateTo = useNavigate()
 
   const [formData, setFormData] = useState({
     email: "",
@@ -33,12 +37,10 @@ export default function LoginForm() {
       );
 
     if (!isEmailValid || !isPasswordValid) {
-      alert("dati non corretti")
+      alert("dati non corretti");
       return;
     }
 
-
-    
     //logica per controllare autenticazione in db
     const logDb = await AuthService.login({
       email: formData.email,
@@ -63,6 +65,11 @@ export default function LoginForm() {
       document.cookie = "token=" + logDb.token + ";";
     }
 
+    //setto un cookie con l'email dell'utente che si è loggato
+    Cookies.set("email", formData.email, {
+      expires: AuthService.getExpireSecond(logDb.ttl, logDb.tokenCreationType),
+    });
+
     //mi prendo i dati dell'utente e li setto nello stato
     const userDb = await AuthService.getUtente(formData.email);
 
@@ -74,19 +81,13 @@ export default function LoginForm() {
       email: userDb.email,
     });
 
-    //dopo il login modifico navbar per far capire che si è loggati (da fare)
+    setIsLogged(true);
+
+    //vai verso la home
+    navigateTo("/")
   };
 
-  const getExpireSecond = (ttl, creation) => {
-    const ttlTimestamp = new Date(ttl).getTime();
-    const creationTimestamp = new Date(creation).getTime();
-
-    // Calcola la durata del cookie in millisecondi
-    const duration = ttlTimestamp - creationTimestamp;
-
-    //converto duration da millisecondi a secondi
-    return duration * 1000;
-  };
+  
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -163,7 +164,7 @@ export default function LoginForm() {
                 <input
                   type="password"
                   className={
-                    "form-control " 
+                    "form-control "
                     /*(formValid.isEmailValid == null || formValid.isPasswordValid ? "" : "border-danger")*/
                   }
                   id="pass1"

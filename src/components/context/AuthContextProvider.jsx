@@ -12,9 +12,13 @@ export default function AuthContextProvider({ children }) {
     email: ""
   });
 
+  const [isLogged, setIsLogged] = useState(false)
+
+   
+
   return (
     <>
-      <AuthContext.Provider value={{ user, setUser }}>
+      <AuthContext.Provider value={{ user, setUser, isLogged, setIsLogged }}>
         {children}
       </AuthContext.Provider>
     </>
