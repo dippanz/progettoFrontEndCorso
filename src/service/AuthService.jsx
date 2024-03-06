@@ -1,6 +1,22 @@
 const AuthService = {
   // Registrazione
-  register: async (userData) => {},
+  register: async (userData) => {
+    const jsonData = JSON.stringify(userData);
+
+    const response = await fetch(
+      "http://localhost:8080/api/utente/registrazione",
+      {
+        mode: "cors",
+        method: "POST",
+        body: jsonData,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  },
 
   // Login --> ritorna i token di accesso e il resto
   login: async (credentials) => {
@@ -15,7 +31,7 @@ const AuthService = {
       },
     });
 
-    return response.json();
+    return response;
   },
 
   // Logout
@@ -29,8 +45,10 @@ const AuthService = {
   },
 
   getUtente: async (email) => {
-    const url = `http://localhost:8080/api/utente?email=${encodeURIComponent(email)}`;
-  
+    const url = `http://localhost:8080/api/utente?email=${encodeURIComponent(
+      email
+    )}`;
+
     const response = await fetch(url, {
       mode: "cors",
       method: "GET",
@@ -38,8 +56,8 @@ const AuthService = {
         "Content-Type": "application/json",
       },
     });
-  
-    return response.json();
+
+    return response;
   },
 };
 
