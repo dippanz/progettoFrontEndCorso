@@ -15,6 +15,15 @@ export default function Header() {
 
     //gestistio il loguot dello stato
     setIsLogged(false);
+
+    //cancello lo stato dell'utente
+    setUser({
+      id: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      ruoli : []
+    });
   };
 
   return (

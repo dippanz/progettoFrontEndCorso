@@ -18,11 +18,11 @@ export default function Layout() {
       if (email != undefined) {
         AuthService.getUtente(email).then((userDb) => {
           setUser({
-            ...user,
             id: userDb.id,
             firstName: userDb.nome,
             lastName: userDb.cognome,
             email: userDb.email,
+            ruoli : userDb.ruoli
           });
         });
       }

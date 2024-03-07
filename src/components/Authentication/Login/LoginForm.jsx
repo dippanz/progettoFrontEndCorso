@@ -77,7 +77,6 @@ export default function LoginForm() {
     const userDb = await AuthService.getUtente(formData.email);
 
     setUser({
-      ...user,
       id: userDb.id,
       firstName: userDb.nome,
       lastName: userDb.cognome,

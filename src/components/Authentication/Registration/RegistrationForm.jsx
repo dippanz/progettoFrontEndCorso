@@ -95,6 +95,7 @@ export default function RegistrationForm() {
       firstName: userDb.nome,
       lastName: userDb.cognome,
       email: userDb.email,
+      ruoli : userDb.ruoli
     });
 
     setIsLogged(true);

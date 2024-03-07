@@ -24,6 +24,7 @@ export default function CourseList() {
   return (
     <>
       {isLogged ? (
+        // controllo se l'utente loggato è un admin ovvero ha le autorizzazzioni per accedere
         user.ruoli.filter((ruolo) => ruolo.tipologia == "Admin").length == 1 ? (
           <div className="containerCourses">
             <h2 className="titleCourses">Lista dei Corsi</h2>
