@@ -9,7 +9,8 @@ export default function AuthContextProvider({ children }) {
     id: "",
     firstName: "",
     lastName: "",
-    email: ""
+    email: "",
+    ruoli : []
   });
 
   const [isLogged, setIsLogged] = useState(false)

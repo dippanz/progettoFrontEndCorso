@@ -61,7 +61,7 @@ const AuthService = {
       },
     });
 
-    return response;
+    return response.json();
   },
   // Funzione per verificare periodicamente la validità del cookie
   checkTokenExpiration: () => {

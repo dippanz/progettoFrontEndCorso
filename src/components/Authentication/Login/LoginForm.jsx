@@ -82,6 +82,7 @@ export default function LoginForm() {
       firstName: userDb.nome,
       lastName: userDb.cognome,
       email: userDb.email,
+      ruoli : userDb.ruoli
     });
 
     //vai verso la home
