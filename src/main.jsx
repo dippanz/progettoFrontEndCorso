@@ -12,8 +12,9 @@ import AuthContextProvider from "./components/context/AuthContextProvider.jsx";
 import Layout from "./components/Layout.jsx";
 import LoginForm from "./components/Authentication/Login/LoginForm.jsx";
 import RegistrationForm from "./components/Authentication/Registration/RegistrationForm.jsx";
-import AuthService from "./service/AuthService.jsx";
 import CourseList from "./pages/Courses/CourseList.jsx";
+
+import Profile from "./pages/Profile/Profile.jsx";
 
 const router = createBrowserRouter([
   {
@@ -36,16 +37,16 @@ const router = createBrowserRouter([
         element: <RegistrationForm></RegistrationForm>,
       },
       {
-        path:"/courses",
-        element: <CourseList></CourseList>
+        path: "/courses",
+        element: <CourseList></CourseList>,
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>
       }
     ],
   },
 ]);
-
-
-
-
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   /*<React.StrictMode>

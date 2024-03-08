@@ -22,7 +22,7 @@ export default function Header() {
       firstName: "",
       lastName: "",
       email: "",
-      ruoli : []
+      ruoli: [],
     });
   };
 
@@ -35,7 +35,9 @@ export default function Header() {
             <li>
               <Link to="/">Home</Link>
             </li>
-            <li>Dashboard</li>
+            <li>
+              <Link to={isLogged ? "/profile" : "/login"}>Profile</Link>
+            </li>
 
             {!isLogged ? (
               <li>

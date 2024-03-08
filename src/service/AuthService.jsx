@@ -40,6 +40,7 @@ const AuthService = {
   logout: () => {
     //rimuovo token
     Cookies.remove("token");
+    Cookies.remove("email")
   },
 
   // Verifica stato di autenticazione
