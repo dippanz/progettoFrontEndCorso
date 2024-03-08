@@ -53,22 +53,24 @@ export default function LoginForm() {
     }
 
     logDb.json().then((dataToken) => {
-
-      console.log(dataToken)
+      console.log(dataToken);
       //i dati sono corretti allora inserisco l'utente e setto il token se lui ha scelto di essere ricordato
       if (formData.remember) {
         Cookies.set("token", dataToken.token, {
           expires: new Date(dataToken.ttl),
         });
+
+        //setto un cookie con l'email dell'utente che si è loggato
+        Cookies.set("email", formData.email, {
+          expires: new Date(dataToken.ttl),
+        });
       } else {
         // in questo caso l'autenticazione scade quando venie chiusa la sessione
         Cookies.set("token", dataToken.token);
-      }
 
-      //setto un cookie con l'email dell'utente che si è loggato
-      Cookies.set("email", formData.email, {
-        expires: new Date(dataToken.ttl),
-      });
+        //setto un cookie con l'email dell'utente che si è loggato
+        Cookies.set("email", formData.email);
+      }
 
       setIsLogged(true);
     });
@@ -81,7 +83,7 @@ export default function LoginForm() {
       firstName: userDb.nome,
       lastName: userDb.cognome,
       email: userDb.email,
-      ruoli : userDb.ruoli
+      ruoli: userDb.ruoli,
     });
 
     //vai verso la home
@@ -89,10 +91,14 @@ export default function LoginForm() {
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value, checked, type } = e.target;
 
-    //setto i dati del form
-    setFormData({ ...formData, [name]: value });
+    if (type == "checkbox") {
+      setFormData({ ...formData, [name]: checked });
+    } else {
+      //setto i dati del form
+      setFormData({ ...formData, [name]: value });
+    }
   };
 
   const handleBlur = () => {
@@ -180,8 +186,8 @@ export default function LoginForm() {
                   type="checkbox"
                   className="form-check-input"
                   id="check1"
-                  name="check"
-                  value={formData.remember}
+                  name="remember"
+                  checked={formData.remember}
                   onChange={handleChange}
                 />
                 <label className="form-check-label" htmlFor="check1">
