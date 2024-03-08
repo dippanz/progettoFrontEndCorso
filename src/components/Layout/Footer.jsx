@@ -11,13 +11,11 @@ export default function Footer() {
     <footer className="bg-dark text-light text-center">
       <div className="py-5">
         <div className="d-flex justify-content-center mb-5">
-          <Link>
-            <FontAwesomeIcon
-              icon={faArrowUp}
-              className="text-light"
-              onclick={scrollToTop}
-            />
-          </Link>
+          <FontAwesomeIcon style={{cursor:"pointer"}}
+            icon={faArrowUp}
+            className="text-light"
+            onClick={scrollToTop}
+          />
         </div>
 
         <div className="row">
