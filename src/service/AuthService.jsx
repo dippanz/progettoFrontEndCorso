@@ -40,7 +40,7 @@ const AuthService = {
   logout: () => {
     //rimuovo token
     Cookies.remove("token");
-    Cookies.remove("email")
+    Cookies.remove("email");
   },
 
   // Verifica stato di autenticazione
@@ -96,7 +96,7 @@ const AuthService = {
 
     //converto duration da millisecondi a secondi
     return duration * 1000;
-  }
+  },
 };
 
 export default AuthService;

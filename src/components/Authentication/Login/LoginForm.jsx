@@ -7,10 +7,17 @@ import { Link, useNavigate } from "react-router-dom";
 import RegistrationForm from "../Registration/RegistrationForm";
 import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
+import { useDispatch, useSelector } from "react-redux";
+import { setSession } from "../../../Store/Reducers/Login"; 
+
 
 export default function LoginForm() {
   const { user, setUser } = useContext(AuthContext);
   const { isLogged, setIsLogged } = useContext(AuthContext);
+
+  const dispatch = useDispatch();
+
+  const dataToken = useSelector((state) => state.login);
 
   const navigateTo = useNavigate();
 
@@ -24,6 +31,14 @@ export default function LoginForm() {
     isEmailValid: null,
     isPasswordValid: null,
   });
+
+  //serve per settare la sessione di autenticazione dell'utente
+  const setTokenSession = (dataToken) => {
+    //setto la sessione del token
+    dispatch(setSession(dataToken.token));
+  };
+
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,7 +68,7 @@ export default function LoginForm() {
       return;
     }
 
-    logDb.json().then((dataToken) => {
+    /*logDb.json().then((dataToken) => {
       //i dati sono corretti allora inserisco l'utente e setto il token se lui ha scelto di essere ricordato
       if (formData.remember) {
         Cookies.set("token", dataToken.token, {
@@ -67,22 +82,44 @@ export default function LoginForm() {
       } else {
         // in questo caso l'autenticazione scade quando venie chiusa la sessione
         Cookies.set("token", dataToken.token);
-
         //setto un cookie con l'email dell'utente che si è loggato scade quando venie chiusa la sessione
         Cookies.set("email", formData.email);
       }
 
       //mi prendo i dati dell'utente e li setto nello stato
       const dataDecoded = jwtDecode(dataToken.token);
-      console.log(dataDecoded);
-
       
+
       setUser({
         firstName: dataDecoded.nome,
         lastName: dataDecoded.cognome,
         email: dataDecoded.email,
         ruoli: dataDecoded.ruoli,
       });
+
+      setIsLogged(true);
+    });*/
+
+    logDb.json().then((dataToken) => {
+      dispatch(
+        setSession({
+          token: dataToken.token,
+          ttl: dataToken.ttl,
+          email: formData.email,
+        })
+      );
+      /*
+      //mi prendo i dati dell'utente e li setto nello stato
+      const dataDecoded = jwtDecode(dataToken.token);
+
+      console.log(dataDecoded)
+      
+      setUser({
+        firstName: dataDecoded.nome,
+        lastName: dataDecoded.cognome,
+        email: dataDecoded.email,
+        ruoli: dataDecoded.ruoli,
+      });*/
 
       setIsLogged(true);
     });

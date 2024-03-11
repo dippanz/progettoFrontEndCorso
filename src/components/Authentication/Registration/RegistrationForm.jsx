@@ -6,12 +6,16 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthService from "../../../service/AuthService";
 import { AuthContext } from "../../context/AuthContextProvider";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setSession } from "../../../Store/Reducers/Login";
 
 export default function RegistrationForm() {
   const { user, setUser } = useContext(AuthContext);
   const { isLogged, setIsLogged } = useContext(AuthContext);
 
-  const navigateTo = useNavigate()
+  const dispatch = useDispatch()
+
+  const navigateTo = useNavigate();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -81,27 +85,25 @@ export default function RegistrationForm() {
       password: formData.password,
     });
 
+    dispatch(
+      setSession({
+        token: logDb.token,
+        ttl: logDb.ttl,
+        email: formData.email,
+      })
+    );
+
+    /*
     //setto la validazione dell'accesso solo alla sessione
     document.cookie = "token=" + logDb.token + ";";
 
     //setto un cookie con l'email dell'utente che si è loggato
     Cookies.set("email", formData.email, {
       expires: AuthService.getExpireSecond(logDb.ttl, logDb.tokenCreationType),
-    });
-
-    setUser({
-      ...user,
-      id: userDb.id,
-      firstName: userDb.nome,
-      lastName: userDb.cognome,
-      email: userDb.email,
-      ruoli : userDb.ruoli
-    });
-
-    setIsLogged(true);
-
+    });*/
+    
     //vai verso la home
-    navigateTo("/")
+    navigateTo("/");
   };
 
   return (

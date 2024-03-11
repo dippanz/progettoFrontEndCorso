@@ -8,24 +8,21 @@ import { AuthContext } from "../../components/context/AuthContextProvider";
 
 //selector legge valore dallo store, dispatch lo invia
 import { useSelector, useDispatch } from "react-redux";
-import { increment, reset, incrementByAmount } from "../Store/Reducers/example";
 
 export default function Home() {
   const { isLogged, setIsLogged } = useContext(AuthContext);
 
-  const [valore, setValore] = useState(0)
+  //const [valore, setValore] = useState(0);
 
-  let contatore = useSelector((state) => {
+  /*let contatore = useSelector((state) => {
     return state.example.value;
-  });
+  });*/
 
-  console.log(contatore);
-
-  let dispatch = useDispatch();
+  //let dispatch = useDispatch();
 
   return (
     <>
-      <button
+      {/* <button
         onClick={() => {
           dispatch(increment());
         }}
@@ -49,7 +46,7 @@ export default function Home() {
         }}
       >
         incrementByAmount
-      </button>
+      </button> */}
 
       <div className="home-banner">
         <h1 className="title">Benvenuto nella Piattaforma di Corsi IT</h1>
