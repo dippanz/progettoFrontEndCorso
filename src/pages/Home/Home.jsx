@@ -3,14 +3,54 @@ import "./Home.css";
 import backEnd from "../../assets/back-end.jpeg";
 import frontEnd from "../../assets/front-end.png";
 import deepL from "../../assets/deep-learning.png";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../components/context/AuthContextProvider";
+
+//selector legge valore dallo store, dispatch lo invia
+import { useSelector, useDispatch } from "react-redux";
+import { increment, reset, incrementByAmount } from "../Store/Reducers/example";
 
 export default function Home() {
   const { isLogged, setIsLogged } = useContext(AuthContext);
 
+  const [valore, setValore] = useState(0)
+
+  let contatore = useSelector((state) => {
+    return state.example.value;
+  });
+
+  console.log(contatore);
+
+  let dispatch = useDispatch();
+
   return (
     <>
+      <button
+        onClick={() => {
+          dispatch(increment());
+        }}
+      >
+        increment
+      </button>
+
+      <button
+        onClick={() => {
+          dispatch(reset());
+        }}
+      >
+        reset
+      </button>
+
+      <input type="text" onChange={(e) => {setValore(e.target.value)}}/>
+
+      <button
+        onClick={() => {
+          dispatch(incrementByAmount(Number.parseInt(valore)));
+        }}
+      >
+        incrementByAmount
+      </button>
+
       <div className="home-banner">
         <h1 className="title">Benvenuto nella Piattaforma di Corsi IT</h1>
 

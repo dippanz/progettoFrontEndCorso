@@ -1,6 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../components/context/AuthContextProvider";
 import UsersService from "../../service/UsersService";
+import buttonModify from "../../assets/button-modify.svg";
+import buttonTrush from "../../assets/trush.svg";
+import { Link } from "react-router-dom";
 
 export default function UsersList() {
   const [users, setUsers] = useState([]);
@@ -16,6 +19,18 @@ export default function UsersList() {
     });
   }, []);
 
+  const removeUser = (emailUserToRemove) => {
+    const response = UsersService.remove(emailUserToRemove);
+    response.then((response) => {
+      if (response.ok) {
+        //elimino l'utente anche dallo stato
+        setUsers(users.filter((user) => user.email !== emailUserToRemove));
+      }
+    })
+    
+    
+  };
+
   return (
     <>
       {user.ruoli.filter((ruolo) => ruolo.tipologia == "Admin").length == 1 ? (
@@ -28,6 +43,7 @@ export default function UsersList() {
                 <th scope="col">Last Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Role</th>
+                <th scope="col"></th>
               </tr>
             </thead>
 
@@ -36,6 +52,7 @@ export default function UsersList() {
                 <tr key={user.id}>
                   <td>{user.nome}</td>
                   <td>{user.cognome}</td>
+
                   <td>{user.email}</td>
                   <td>
                     {user.ruoli.map((role) => (
@@ -45,13 +62,31 @@ export default function UsersList() {
                       </span>
                     ))}
                   </td>
+                  <td>
+                    {/* per modificare gli utenti basta farlo inline e uso una select a scelta multipla (per i ruoli), vedi copilot c'era un idea */}
+                      <img
+                        src={buttonModify}
+                        alt="button modify"
+                        style={{ marginRight: "30px" }}
+                      />
+                   
+
+                    <img
+                      src={buttonTrush}
+                      alt="button trush"
+                      onClick={() => {
+                        removeUser(user.email);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       ) : (
-        <div style={{marginBottom:"30rem"}}></div>
+        <div style={{ marginBottom: "30rem" }}></div>
       )}
     </>
   );

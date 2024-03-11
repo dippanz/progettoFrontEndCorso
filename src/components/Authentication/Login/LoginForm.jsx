@@ -6,6 +6,7 @@ import { AuthContext } from "../../context/AuthContextProvider";
 import { Link, useNavigate } from "react-router-dom";
 import RegistrationForm from "../Registration/RegistrationForm";
 import Cookies from "js-cookie";
+import { jwtDecode } from "jwt-decode";
 
 export default function LoginForm() {
   const { user, setUser } = useContext(AuthContext);
@@ -53,7 +54,6 @@ export default function LoginForm() {
     }
 
     logDb.json().then((dataToken) => {
-      console.log(dataToken);
       //i dati sono corretti allora inserisco l'utente e setto il token se lui ha scelto di essere ricordato
       if (formData.remember) {
         Cookies.set("token", dataToken.token, {
@@ -68,22 +68,23 @@ export default function LoginForm() {
         // in questo caso l'autenticazione scade quando venie chiusa la sessione
         Cookies.set("token", dataToken.token);
 
-        //setto un cookie con l'email dell'utente che si è loggato
+        //setto un cookie con l'email dell'utente che si è loggato scade quando venie chiusa la sessione
         Cookies.set("email", formData.email);
       }
 
+      //mi prendo i dati dell'utente e li setto nello stato
+      const dataDecoded = jwtDecode(dataToken.token);
+      console.log(dataDecoded);
+
+      
+      setUser({
+        firstName: dataDecoded.nome,
+        lastName: dataDecoded.cognome,
+        email: dataDecoded.email,
+        ruoli: dataDecoded.ruoli,
+      });
+
       setIsLogged(true);
-    });
-
-    //mi prendo i dati dell'utente e li setto nello stato
-    const userDb = await AuthService.getUtente(formData.email);
-
-    setUser({
-      id: userDb.id,
-      firstName: userDb.nome,
-      lastName: userDb.cognome,
-      email: userDb.email,
-      ruoli: userDb.ruoli,
     });
 
     //vai verso la home

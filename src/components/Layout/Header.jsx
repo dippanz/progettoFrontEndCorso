@@ -9,6 +9,7 @@ import AuthService from "../../service/AuthService";
 
 export default function Header() {
   const { isLogged, setIsLogged } = useContext(AuthContext);
+  const {user, setUser} = useContext(AuthContext)
 
   const logoutClick = () => {
     AuthService.logout();
@@ -36,7 +37,7 @@ export default function Header() {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to={isLogged ? "/profile" : "/login"}>Profile</Link>
+              <Link to="/profile">Profile</Link>
             </li>
 
             {!isLogged ? (

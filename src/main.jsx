@@ -16,6 +16,11 @@ import CourseList from "./pages/Courses/CourseList.jsx";
 
 import Profile from "./pages/Profile/Profile.jsx";
 
+import { Provider } from "react-redux";
+
+import store, { persistStorage } from "./pages/Store/index.jsx";
+import { PersistGate } from "redux-persist/integration/react";
+
 const router = createBrowserRouter([
   {
     element: (
@@ -42,15 +47,16 @@ const router = createBrowserRouter([
       },
       {
         path: "/profile",
-        element: <Profile></Profile>
-      }
+        element: <Profile></Profile>,
+      },
     ],
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  /*<React.StrictMode>
-    <App />
-  </React.StrictMode>,*/
-  <RouterProvider router={router}></RouterProvider>
+  <Provider store={store}>
+    <PersistGate persistor={persistStorage}>
+      <RouterProvider router={router}></RouterProvider>
+    </PersistGate>
+  </Provider>
 );

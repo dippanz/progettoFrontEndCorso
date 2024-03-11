@@ -16,7 +16,9 @@ export default function Layout() {
   useEffect(() => {
     if (AuthService.isAuthenticated()) {
       const email = Cookies.get("email");
+      const token = Cookies.get("token");
       console.log(email);
+      console.log(token);
       if (email != undefined) {
         AuthService.getUtente(email).then((userDb) => {
           if (userDb.id != undefined && userDb.id != "") {
