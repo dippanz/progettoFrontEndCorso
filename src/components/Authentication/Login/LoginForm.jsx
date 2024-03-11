@@ -32,14 +32,6 @@ export default function LoginForm() {
     isPasswordValid: null,
   });
 
-  //serve per settare la sessione di autenticazione dell'utente
-  const setTokenSession = (dataToken) => {
-    //setto la sessione del token
-    dispatch(setSession(dataToken.token));
-  };
-
-  
-
   const handleSubmit = async (e) => {
     e.preventDefault();
 

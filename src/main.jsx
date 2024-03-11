@@ -20,6 +20,7 @@ import { Provider } from "react-redux";
 
 import store, { persistStorage } from "./Store/index.jsx";
 import { PersistGate } from "redux-persist/integration/react";
+import PrivateRoute from "./components/Shared/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -42,12 +43,18 @@ const router = createBrowserRouter([
         element: <RegistrationForm></RegistrationForm>,
       },
       {
-        path: "/courses",
-        element: <CourseList></CourseList>,
-      },
-      {
-        path: "/profile",
-        element: <Profile></Profile>,
+        path: "",
+        element: <PrivateRoute></PrivateRoute>,
+        children: [
+          {
+            path: "/courses",
+            element: <CourseList></CourseList>,
+          },
+          {
+            path: "/profile",
+            element: <Profile></Profile>,
+          },
+        ],
       },
     ],
   },
